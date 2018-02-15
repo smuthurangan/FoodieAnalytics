@@ -1,0 +1,100 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="fill_parent"
+        android:gravity="bottom">
+        <TextView
+            android:id="@+id/TextViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Air Restaurant"
+            android:textSize="7.5pt"
+            android:paddingLeft="25px"
+            android:paddingTop="25px">
+        </TextView>
+        <Spinner
+            android:id="@+id/SpinnerFeedbackType"
+            android:prompt="@string/feedbacktype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/feedbacktypelist"
+            android:paddingLeft="25px"
+            android:paddingTop="25px"
+            android:dropDownWidth="wrap_content"
+            android:spinnerMode="dropdown"
+            >
+        </Spinner>
+
+        <TextView
+            android:id="@+id/TextViewTitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter Start Date"
+            android:textSize="7.5pt"
+            android:paddingLeft="25px"
+            android:paddingTop="25px">
+        </TextView>
+
+        <EditText
+            android:id="@+id/startDay"
+            android:clickable="true"
+            android:hint="mm/dd/yyyy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="25px"
+            android:paddingTop="25px"
+            android:focusable="false"
+            />
+
+        <TextView
+            android:id="@+id/TextViewTitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter End Date"
+            android:textSize="7.5pt"
+            android:paddingLeft="25px"
+            android:paddingTop="25px">
+        </TextView>
+
+        <EditText
+            android:id="@+id/endDay"
+            android:clickable="true"
+            android:hint="mm/dd/yyyy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="25px"
+            android:paddingTop="25px"
+            android:focusable="false"
+            />
+
+        <Button android:id="@+id/submit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Submit"
+            android:paddingLeft="25px"
+            android:paddingTop="25px"
+            android:onClick="onClickBtn"></Button>
+
+        <!--<TextView-->
+            <!--android:id="@+id/TextViewTitle4"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="7.5pt"-->
+            <!--android:paddingLeft="25px"-->
+            <!--android:paddingTop="25px">-->
+        <!--</TextView>-->
+
+        <com.github.mikephil.charting.charts.HorizontalBarChart
+            android:id="@+id/chart"
+            android:layout_width="400dp"
+            android:layout_height="250dp" />
+
+    </LinearLayout>
+</ScrollView>

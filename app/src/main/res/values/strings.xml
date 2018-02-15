@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">FoodieAnalytics</string>
+    <string name="title_item_detail">Item Detail</string>
+    <string name="feedbacktype">Enter an Air ID</string>
+    <!--Other string resources also defined in this file… -->
+    <string name="feedbacktype1">Praise</string>
+    <string name="feedbacktype2">Gripe</string>
+    <string name="feedbacktype3">Suggestion</string>
+    <string name="feedbacktype4">Bug</string>
+    <string-array name="feedbacktypelist">
+        <item>@string/feedbacktype1</item>
+        <item>@string/feedbacktype2</item>
+        <item>@string/feedbacktype3</item>
+        <item>@string/feedbacktype4</item>
+    </string-array>
+</resources>
