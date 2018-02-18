@@ -23,6 +23,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar"
             app:expandedTitleTextAppearance="@style/CollapsedAppBarTopic"
+            android:gravity="center_vertical|right"
             >
 
             <android.support.v7.widget.Toolbar
