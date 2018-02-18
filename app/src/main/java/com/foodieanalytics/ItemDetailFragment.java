@@ -139,7 +139,13 @@ public class ItemDetailFragment extends Fragment {
             final Calendar myCalendar = Calendar.getInstance();
             myCalendar.set(Calendar.YEAR, 2017);
             myCalendar.set(Calendar.MONTH, 3);
-            myCalendar.set(Calendar.DAY_OF_MONTH, 1);
+            myCalendar.set(Calendar.DAY_OF_MONTH, 23);
+
+
+            final Calendar myEndCalendar = Calendar.getInstance();
+            myEndCalendar.set(Calendar.YEAR, 2017);
+            myEndCalendar.set(Calendar.MONTH, 4);
+            myEndCalendar.set(Calendar.DAY_OF_MONTH, 30);
 
             final EditText edittext = (EditText) rootView.findViewById(R.id.startDay);
             final EditText endtext = (EditText) rootView.findViewById(R.id.endDay);
@@ -162,9 +168,12 @@ public class ItemDetailFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
-                    new DatePickerDialog(ItemDetailFragment.super.getContext(), date, myCalendar
+                    DatePickerDialog start =  new DatePickerDialog(ItemDetailFragment.super.getContext(), date, myCalendar
                             .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                            myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                            myCalendar.get(Calendar.DAY_OF_MONTH));
+                    start.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
+                    start.getDatePicker().setMaxDate(myEndCalendar.getTimeInMillis());
+                    start.show();
                 }
             });
 
@@ -173,10 +182,13 @@ public class ItemDetailFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
-                    DatePickerDialog end = new DatePickerDialog(ItemDetailFragment.super.getContext(), date, myCalendar
-                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                            myCalendar.get(Calendar.DAY_OF_MONTH));
+                    DatePickerDialog end = new DatePickerDialog(ItemDetailFragment.super.getContext(), date, myEndCalendar
+                            .get(Calendar.YEAR), myEndCalendar.get(Calendar.MONTH),
+                            myEndCalendar.get(Calendar.DAY_OF_MONTH));
+                    end.getDatePicker().setMaxDate(myEndCalendar.getTimeInMillis());
+                    end.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
                     end.show();
+
                 }
 
                 final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
