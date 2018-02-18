@@ -38,7 +38,6 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -95,12 +94,23 @@ public class ItemDetailFragment extends Fragment {
 
 
         // Show the dummy content as text in a TextView.
+        final View rootView = inflater.inflate(R.layout.item_detail, container, false);
+        final View textView = inflater.inflate(R.layout.item_list_text, container, false);
         if (mItem.content != null && mItem.content.equalsIgnoreCase("Dashboard")) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://public.tableau.com/profile/erik.platt#!/vizhome/FoodieAnalyticsDashboardv2/LocationDashboard?publish=yes"));
             startActivity(browserIntent);
             return null;
+        } else if(mItem.content != null && mItem.content.equalsIgnoreCase("About Us")) {
+            String text = "We at Foodie Analytics would like to thank you for giving us the opportunity to bring in our 15+ years of analytics experience " +
+                    "in the hospitality industry and build predictive models that will serve your needs. We understand running a thriving local restaurant " +
+                    "is not as charming and straightforward as it appears at first. To run a successful restaurant, it is important to know how many customers " +
+                    "to expect each day to effectively plan the purchase of ingredients and schedule the restaurant staff. Our expert team of data scientists will utilize" +
+                    " the reservation and customer visitation data that your company owns to not only predict the future customer visits to a restaurant, but also define the competitive environment " +
+                    "for an existing restaurant, and the most optimal location for a new restaurant. " +
+                    "The product will also provide the flexibility to utilize the same predictive model for other players in the industry such as hotels, casinos, and bars, if similar data becomes available. ";
+            ((TextView) textView.findViewById(R.id.TextViewTitle4)).setText(text);
+            return textView;
         } else {
-            final View rootView = inflater.inflate(R.layout.item_detail, container, false);
             if (mItem.content != null && mItem.content.equalsIgnoreCase("Forecast of Visitors by Air Restaurant")) {
                 CACHED_PREDS = read("pred.csv");
             } else if (mItem.content != null && mItem.content.equalsIgnoreCase("Forecast of Visitors by Area")) {
@@ -108,6 +118,7 @@ public class ItemDetailFragment extends Fragment {
             } else {
                 CACHED_PREDS = read("pred_genre.csv");
             }
+
             List<String> spinnerArray = new ArrayList<String>();
             Iterator iterator = CACHED_PREDS.keySet().iterator();
             String prev = null;
@@ -244,10 +255,9 @@ public class ItemDetailFragment extends Fragment {
                     chart.invalidate();
                 }
             });
-
-
             return ((ScrollView) rootView.findViewById(R.id.ScrollView01));
         }
+
     }
 
     public class MyXAxisValueFormatter implements IAxisValueFormatter {

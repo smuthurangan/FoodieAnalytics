@@ -82,15 +82,6 @@
             android:paddingTop="25px"
             android:onClick="onClickBtn"></Button>
 
-        <!--<TextView-->
-            <!--android:id="@+id/TextViewTitle4"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="7.5pt"-->
-            <!--android:paddingLeft="25px"-->
-            <!--android:paddingTop="25px">-->
-        <!--</TextView>-->
-
         <com.github.mikephil.charting.charts.HorizontalBarChart
             android:id="@+id/chart"
             android:layout_width="400dp"
