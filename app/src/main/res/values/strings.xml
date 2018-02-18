@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FoodieAnalytics</string>
+    <string name="app_name">FoodieMobile</string>
     <string name="title_item_detail">Item Detail</string>
     <string name="feedbacktype">Enter an Air ID</string>
     <!--Other string resources also defined in this file… -->

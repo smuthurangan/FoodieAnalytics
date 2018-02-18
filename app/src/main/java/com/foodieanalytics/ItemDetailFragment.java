@@ -82,6 +82,8 @@ public class ItemDetailFragment extends Fragment {
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
+                appBarLayout.setExpandedTitleMarginBottom(106);
+                appBarLayout.setExpandedTitleMarginStart(100);
                 appBarLayout.setTitle(mItem.content);
             }
         }
@@ -90,14 +92,22 @@ public class ItemDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.item_detail, container, false);
+
 
         // Show the dummy content as text in a TextView.
         if (mItem.content != null && mItem.content.equalsIgnoreCase("Dashboard")) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://public.tableau.com/profile/erik.platt#!/vizhome/FoodieAnalyticsDashboardv2/LocationDashboard?publish=yes"));
             startActivity(browserIntent);
+            return null;
         } else {
-            if (CACHED_PREDS == null) CACHED_PREDS = read();
+            final View rootView = inflater.inflate(R.layout.item_detail, container, false);
+            if (mItem.content != null && mItem.content.equalsIgnoreCase("Forecast of Visitors by Air Restaurant")) {
+                CACHED_PREDS = read("pred.csv");
+            } else if (mItem.content != null && mItem.content.equalsIgnoreCase("Forecast of Visitors by Area")) {
+                CACHED_PREDS = read("pred_area.csv");
+            } else {
+                CACHED_PREDS = read("pred_genre.csv");
+            }
             List<String> spinnerArray = new ArrayList<String>();
             Iterator iterator = CACHED_PREDS.keySet().iterator();
             String prev = null;
@@ -108,7 +118,6 @@ public class ItemDetailFragment extends Fragment {
                     spinnerArray.add(val);
                 prev = val;
             }
-            System.out.println(spinnerArray.size());
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                     super.getContext(), android.R.layout.simple_spinner_item, spinnerArray);
 
@@ -117,6 +126,9 @@ public class ItemDetailFragment extends Fragment {
             sItems.setAdapter(adapter);
 
             final Calendar myCalendar = Calendar.getInstance();
+            myCalendar.set(Calendar.YEAR, 2017);
+            myCalendar.set(Calendar.MONTH, 3);
+            myCalendar.set(Calendar.DAY_OF_MONTH, 1);
 
             final EditText edittext = (EditText) rootView.findViewById(R.id.startDay);
             final EditText endtext = (EditText) rootView.findViewById(R.id.endDay);
@@ -184,16 +196,13 @@ public class ItemDetailFragment extends Fragment {
                     EditText endtext = (EditText) rootView.findViewById(R.id.endDay);
                     String end = endtext.getText().toString();
 
-                    System.out.println(text + "," + start + "," + end);
-
-                    if (CACHED_PREDS == null) CACHED_PREDS = read();
                     List<Integer> pred = new ArrayList<>();
                     String index = CACHED_PREDS.get(text + "_" + start);
                     index = index.substring(index.indexOf(":") + 1, index.length());
                     String endindex = CACHED_PREDS.get(text + "_" + end);
                     endindex = endindex.substring(endindex.indexOf(":") + 1, endindex.length());
 
-                    List array = new ArrayList(CACHED_PREDS.keySet()).subList(Integer.parseInt(index), Integer.parseInt(endindex)+1);
+                    List array = new ArrayList(CACHED_PREDS.keySet()).subList(Integer.parseInt(index), Integer.parseInt(endindex) + 1);
 
                     for (int i = 0; i < array.size(); i++) {
                         String o = CACHED_PREDS.get(array.get(i));
@@ -234,30 +243,28 @@ public class ItemDetailFragment extends Fragment {
                     chart.animateY(1000);
                     chart.invalidate();
                 }
-        });
+            });
 
 
-        return ((ScrollView) rootView.findViewById(R.id.ScrollView01));
+            return ((ScrollView) rootView.findViewById(R.id.ScrollView01));
+        }
     }
 
-        return rootView;
-}
+    public class MyXAxisValueFormatter implements IAxisValueFormatter {
 
-public class MyXAxisValueFormatter implements IAxisValueFormatter {
+        private List<String> mValues;
 
-    private List<String> mValues;
+        public MyXAxisValueFormatter(List<String> values) {
+            this.mValues = values;
+        }
 
-    public MyXAxisValueFormatter(List<String> values) {
-        this.mValues = values;
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            String valret = String.valueOf(mValues.get((int) value));
+            return valret.substring(valret.lastIndexOf("_") + 1);
+        }
+
     }
-
-    @Override
-    public String getFormattedValue(float value, AxisBase axis) {
-        String valret = String.valueOf(mValues.get((int) value));
-        return valret.substring(valret.lastIndexOf("_")+1);
-    }
-
-}
 
     private ArrayList<BarEntry> getDataSet(List<Integer> data) {
 
@@ -280,12 +287,12 @@ public class MyXAxisValueFormatter implements IAxisValueFormatter {
         edittext.setText(sdf.format(myCalendar.getTime()));
     }
 
-    public LinkedHashMap<String, String> read() {
+    public LinkedHashMap<String, String> read(String filename) {
         LinkedHashMap<String, String> resultList = new LinkedHashMap();
         BufferedReader reader = null;
         int count = -1;
         try {
-            reader = new BufferedReader(new InputStreamReader(super.getContext().getAssets().open("pred.csv")));
+            reader = new BufferedReader(new InputStreamReader(super.getContext().getAssets().open(filename)));
             String csvLine;
             while ((csvLine = reader.readLine()) != null) {
                 if (count == -1) {
@@ -293,7 +300,10 @@ public class MyXAxisValueFormatter implements IAxisValueFormatter {
                     continue;
                 }
                 String row = csvLine;
-                resultList.put(row.substring(0, row.indexOf(",")), row.substring(row.indexOf(",") + 1, row.length()) + ":" + count);
+                String key = row.substring(0, row.indexOf(","));
+                key = key.trim();
+                key = key.replaceAll("\\s+","-");
+                resultList.put(key, row.substring(row.indexOf(",") + 1, row.length()) + ":" + count);
                 count++;
             }
         } catch (IOException ex) {
