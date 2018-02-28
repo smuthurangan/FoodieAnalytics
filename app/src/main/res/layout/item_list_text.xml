@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="25px"
         android:paddingTop="25px"
-        android:textSize="7.5pt"></TextView>
+        android:textSize="6pt"
+        android:fontFamily="Arial"></TextView>
 
 </LinearLayout>

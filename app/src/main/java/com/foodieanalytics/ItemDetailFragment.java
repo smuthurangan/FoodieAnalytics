@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,14 +102,14 @@ public class ItemDetailFragment extends Fragment {
             startActivity(browserIntent);
             return null;
         } else if(mItem.content != null && mItem.content.equalsIgnoreCase("About Us")) {
-            String text = "We at Foodie Analytics would like to thank you for giving us the opportunity to bring in our 15+ years of analytics experience " +
-                    "in the hospitality industry and build predictive models that will serve your needs. We understand running a thriving local restaurant " +
-                    "is not as charming and straightforward as it appears at first. To run a successful restaurant, it is important to know how many customers " +
-                    "to expect each day to effectively plan the purchase of ingredients and schedule the restaurant staff. Our expert team of data scientists will utilize" +
-                    " the reservation and customer visitation data that your company owns to not only predict the future customer visits to a restaurant, but also define the competitive environment " +
-                    "for an existing restaurant, and the most optimal location for a new restaurant. " +
-                    "The product will also provide the flexibility to utilize the same predictive model for other players in the industry such as hotels, casinos, and bars, if similar data becomes available. ";
-            ((TextView) textView.findViewById(R.id.TextViewTitle4)).setText(text);
+            String text = "Foodie Analytics is a leading data analytics and consulting firm headquartered in Chicago, IL with 1,200 employees in the Americas. We bring in 15+ years of analytics experience in the hospitality industry, specializing in predictive modeling, business intelligence, mobile and web application development, and project management. Our approach to solve any big data problem begins with a clear understanding of the underlying business need and key management objectives. Our recommendations are based on thorough data analysis, evaluation of different modeling techniques, and latest technology solutions. Foodie Analytics works with some of the top players in the industry in solving mission-critical reporting and analytical needs and achieving high-impact business outcomes."
+            ;
+
+            text = text + "<br><br>" + "<u>Corporate Headquarters </u><br>" +
+                    "401 N. Michigan Ave. <br>" +
+                    "Chicago, IL 60611 <br>" +
+                    "(847) 671-8000";
+            ((TextView) textView.findViewById(R.id.TextViewTitle4)).setText(Html.fromHtml(text));
             return textView;
         } else {
             if (mItem.content != null && mItem.content.equalsIgnoreCase("Forecast of Visitors by Air Restaurant")) {
